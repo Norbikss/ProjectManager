@@ -77,8 +77,11 @@ WSGI_APPLICATION = 'PM.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'Menager',
+        'USER': 'postgres',
+        'PASSWORD': 'kometa321',
+        'HOST': 'localhost',
     }
 }
 
@@ -125,3 +128,14 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# SMTP Configuration
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "teteteststst1209@gmail.com"
+EMAIL_HOST_PASSWORD = "cukjbchhigdrtodw"
+EMAIL_USE_TLS = True
+#EMAIL_USE_SSL = True
+DEFAULT_FROM_EMAIL = 'teteteststst1209@gmail.com'
