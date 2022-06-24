@@ -4,9 +4,10 @@ from django.contrib import messages
 from django.contrib.auth.models import User, auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordResetForm
+from .models import Profile, Employee
 
 # Create your views here.
-@login_required(login_url = '/')
+@login_required(login_url = 'login')
 def index(request):
 	user = User.objects.get(username = request.user)
 	return render(request, 'index.html', {'user': user})
@@ -43,17 +44,40 @@ def register(request):
 			else:
 				user = User.objects.create_user(username = username, email = email, password = password)
 				user.save()
-				#log user and redirect to settings page
+
 				user_login = auth.authenticate(username=username, password=password)
 				auth.login(request, user_login)
+
+				user_model = User.objects.get(username = username)
+				new_profile = Profile.objects.create(user = user_model)
+				new_profile.save()
 				return redirect('index')
 		else:
 			messages.info(request, 'Password Not Matching')
 			return redirect('register')
 	return render(request, 'register.html')
 
+@login_required(login_url = 'login')
+def add_employee(request):
+	user = request.user
+	employer = Profile.objects.get(user = user)
 
-@login_required(login_url='/')
+	if request.method == "POST":
+		name = request.POST['name']
+		surname = request.POST['surname']
+		position = request.POST['position']
+		etat = request.POST['etat']
+
+		employee = Employee(employer = employer, name = name, surname = surname, position = position, work_time = etat)
+		employee.save()
+
+
+	return render(request, 'add_employee.html')
+@login_required(login_url = 'login')
+def show_employees(request):
+	return render(request, 'show_employees.html')
+
+@login_required(login_url = 'login')
 def logout(request):
 	auth.logout(request)
 	return redirect('/')

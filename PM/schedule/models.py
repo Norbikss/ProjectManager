@@ -7,6 +7,7 @@ User = get_user_model()
 # Create your models here.
 class Profile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    #user_id = models.IntegerField()
 
     def __str__(self):
         return self.user.username
@@ -20,7 +21,7 @@ class Employee(models.Model):
     etat = (
         ("F", 'Full-Time'),
         ("H", 'Half-Time'),
-        ("Q", 'Quatter-Time')
+        ("Q", '3/4 Time')
     )
     work_time = models.CharField(max_length=1, choices=etat)
 
@@ -30,7 +31,7 @@ class Employee(models.Model):
 
 class Work_day(models.Model):
     employer = models.ForeignKey(User, on_delete=models.CASCADE)
-    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, default=employer)
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     day = models.DateField()
     hours = (
         ("A", '9-17'),
