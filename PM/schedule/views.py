@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User, auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordResetForm
-from .models import Profile, Employee
+from .models import Profile, Employee, Vacation, Free_days
 
 # Create your views here.
 @login_required(login_url = 'login')
@@ -84,6 +84,14 @@ def show_employees(request):
 
 
 	return render(request, 'show_employees.html', {'employees': employee_list})
+
+@login_required(login_url = 'login')
+def emp_profile(request, pk):
+	employee = Employee.objects.get(id = pk)
+	vacations = Vacation.objects.filter(employee = employee)
+	free_days = Free_days.objects.filter(employee = employee)
+
+	return render(request, 'profile.html', {'employee': employee, 'free_days': free_days, "vacations": vacations})
 
 @login_required(login_url = 'login')
 def logout(request):
