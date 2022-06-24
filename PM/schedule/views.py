@@ -75,7 +75,15 @@ def add_employee(request):
 	return render(request, 'add_employee.html')
 @login_required(login_url = 'login')
 def show_employees(request):
-	return render(request, 'show_employees.html')
+	user = request.user
+	employer = Profile.objects.get(user = user)
+	employer_employee = Employee.objects.filter(employer = employer)
+	employee_list = []
+	for employee in employer_employee:
+		employee_list.append(employee)
+
+
+	return render(request, 'show_employees.html', {'employees': employee_list})
 
 @login_required(login_url = 'login')
 def logout(request):

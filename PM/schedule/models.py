@@ -30,7 +30,7 @@ class Employee(models.Model):
 
 
 class Work_day(models.Model):
-    employer = models.ForeignKey(User, on_delete=models.CASCADE)
+    employer = models.ForeignKey(Profile, on_delete=models.CASCADE)
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     day = models.DateField()
     hours = (
@@ -45,7 +45,7 @@ class Work_day(models.Model):
     	return f'{self.day} {self.employee}'
 
 class Vacation(models.Model):
-    employer = models.ForeignKey(User, on_delete=models.CASCADE)
+    employer = models.ForeignKey(Profile, on_delete=models.CASCADE)
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     start_date = models.DateField()
     end_date = models.DateField()
@@ -53,7 +53,7 @@ class Vacation(models.Model):
     	return self.employee
 
 class Free_days(models.Model):
-    employer = models.ForeignKey(User, on_delete=models.CASCADE)
+    employer = models.ForeignKey(Profile, on_delete=models.CASCADE)
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     date = models.DateField()
     def __str__(self):
