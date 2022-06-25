@@ -173,7 +173,7 @@
                                 <i class="fas fa-tachometer-alt"></i>Employees</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="/show_employees">See employees</a>
+                                    <a href="/show_employees">Show employees</a>
                                 </li>
                                 <li>
                                     <a href="/add_employee">Add employee</a>
@@ -187,7 +187,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="/add_employee">
+                            <a href="add_employee">
                                 <i class="fas fa-chart-bar"></i>Add Employee</a>
                         </li>
                         <li>
@@ -445,34 +445,80 @@
             <!-- MAIN CONTENT-->
             <div class="main-content">
                 <div class="section__content section__content--p30">
-                    <div class="section__content section__content--p30">
-                        <div class="col-md-4">
-                            <div class="card border border-primary">
-                                <div class="card-header">
-                                    <strong class="card-title"><a href="{% url 'emp_profile' employee.id %}">{{employee}} {{employee.surname}}</a></strong>
-                                </div>
-                                {% for vacation in vacations %}
-                                <div class="card-body">
-                                <p class="card-text">
-                                    <ul>
-                                        <li>{{vacation.start_date}}</li>
-                                        <li>{{vacation.end_date}}</li>
-                                    </ul>
-                                </p>
-                                </div>
-                                {%endfor%}
-                                {% for free_day in free_days %}
-                                <div class="card-body">
-                                <p class="card-text">
-                                    <ul>
-                                        <li>{{free_day.date}}</li>
-                                    </ul>
-                                </p>
-                                </div>
-                                {%endfor%}
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <strong>Add Employee</strong>
+                                    </div>
+                                    <div class="card-body card-block">
+                                        {% csrf_token %}
+                                        <form action="" method="POST" enctype="multipart/form-data" class="form-horizontal">
+                                            {% csrf_token %}
+                                            
+                                           
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="select" class=" form-control-label">Employee</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <select name="employee" id="employee" class="form-control">
+                                                        {%for employee in employees%}
+                                                            <option value="{{employee}}">{{employee}} {{employee.surname}}</option>
+                                                        {%endfor%}
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="select" class=" form-control-label">Type</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <select name="free_day_type" id="free_day_type" class="form-control">
+                                                        
+                                                    <option value="vacation">Vacation</option>
+                                                    <option value="free_day">Free Day</option>
+                                                        
+
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                                <div class="row form-group">
+                                                    <div class="col col-md-3">
+                                                        <label for="text-input" class=" form-control-label">Start Date</label>
+                                                    </div>
+                                                    <div class="col-12 col-md-9">
+                                                        <input type="date" id="start_date" name="start_date" placeholder="Text" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <div class="col col-md-3">
+                                                        <label for="text-input" class=" form-control-label">End date</label>
+                                                    </div>
+                                                    <div class="col-12 col-md-9">
+                                                        <input type="date" id="end_date" name="end_date" placeholder="Text" class="form-control">
+                                                    </div>
+                                                </div>
+                                            
+
+                                    </div>
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary btn-sm">
+                                            <i class="fa fa-dot-circle-o"></i> Submit
+                                        </button>
+                                        <button type="reset" class="btn btn-danger btn-sm">
+                                            <i class="fa fa-ban"></i> Reset
+                                        </button>
+                                    </div>
+                                    </form>
+                                </div>    
                             </div>
+                                
                         </div>
-                    </div>
+                    </div>    
                     
                 </div>
             </div>

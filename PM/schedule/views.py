@@ -94,6 +94,33 @@ def emp_profile(request, pk):
 	return render(request, 'profile.html', {'employee': employee, 'free_days': free_days, "vacations": vacations})
 
 @login_required(login_url = 'login')
+def free_days(request):
+	user = request.user
+	employer = Profile.objects.get(user = user)
+	employer_employee = Employee.objects.filter(employer = employer)
+	employee_list = []
+	for employee in employer_employee:
+		employee_list.append(employee)
+
+	if request.method == "POST":
+		employee = request.POST['employee']
+		free_day_type = request.POST['free_day_type']
+		if free_day_type == "vacation":
+			start_date = request.POST['start_date']
+			end_date = request.POST['end_date']
+
+			vacation = Vacation(employee = employee,start_date = start_date, end_date = end_date)
+			vacation.save()
+		elif free_day_type == 'free_day':
+			free_day = request.POST['start_date']
+			free_day = Free_days(employee = employee, date = free_day)
+			free_day.save()
+
+			
+
+	return render(request, 'free_days.html', {'employees': employee_list})
+
+@login_required(login_url = 'login')
 def logout(request):
 	auth.logout(request)
 	return redirect('/')
