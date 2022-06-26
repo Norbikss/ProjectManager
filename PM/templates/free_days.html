@@ -182,7 +182,7 @@
                                     <a href="/free_days">Add free days</a>
                                 </li>
                                 <li>
-                                    <a href="index4.html">Dashboard 4</a>
+                                    <a href="/create_schedule">Create Schedule</a>
                                 </li>
                             </ul>
                         </li>
@@ -465,7 +465,7 @@
                                                 <div class="col-12 col-md-9">
                                                     <select name="employee" id="employee" class="form-control">
                                                         {%for employee in employees%}
-                                                            <option value="{{employee}}">{{employee}} {{employee.surname}}</option>
+                                                            <option value="{{employee.id}}">{{employee}} {{employee.surname}}</option>
                                                         {%endfor%}
 
                                                     </select>

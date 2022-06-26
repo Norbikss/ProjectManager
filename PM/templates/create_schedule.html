@@ -179,7 +179,7 @@
                                     <a href="/free_days">Add free days</a>
                                 </li>
                                 <li>
-                                    <a href="/create_schedule">Create Schedule</a>
+                                    <a href="index4.html">Dashboard 4</a>
                                 </li>
                             </ul>
                         </li>
@@ -450,48 +450,46 @@
                                     <strong>Add Employee</strong>
                                 </div>
                                 <div class="card-body card-block">
-                                    {% csrf_token %}
+                                    
                                     <form action="" method="POST" enctype="multipart/form-data" class="form-horizontal">
-                                        {% csrf_token %}
+                                    {%csrf_token%}
+                                    
                                         
                                         
-                                        <div class="row form-group">
-                                            <div class="col col-md-3">
-                                                <label for="text-input" class=" form-control-label">Name</label>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label class=" form-control-label">Select Employees</label>
+                                                </div>
+                                                <div class="col col-md-9">
+                                                    <div class="form-check">
+                                                        {%for employee in employees%}
+                                                        <div class="checkbox">
+                                                            <label for="checkbox1" class="form-check-label ">                                                       
+                                                        
+                                                            <input type="checkbox" id="{{employee.id}}" name="employee" value="option1" class="form-check-input">{{employee}} {{employee.surname}}    
+                                                           
+                                                            </label>
+                                                        </div>
+                                                        {%endfor%} 
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-12 col-md-9">
-                                                <input type="text" id="name" name="name" placeholder="Name" class="form-control"> 
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col col-md-3">
-                                                <label for="text-input" class=" form-control-label">Surname</label>
-                                            </div>
-                                            <div class="col-12 col-md-9">
-                                                <input type="text" id="surname" name="surname" placeholder="Surname" class="form-control"> 
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col col-md-3">
-                                                <label for="text-input" class=" form-control-label">Position</label>
-                                            </div>
-                                            <div class="col-12 col-md-9">
-                                                <input type="text" id="position" name="position" placeholder="Position" class="form-control"> 
-                                            </div>
-                                        </div>
-                                       
-                                        <div class="row form-group">
-                                            <div class="col col-md-3">
-                                                <label for="select" class=" form-control-label">Etat</label>
-                                            </div>
-                                            <div class="col-12 col-md-9">
-                                                <select name="etat" id="etat" class="form-control">
-                                                    <option value="F">Pełny etat</option>
-                                                    <option value="Q">3/4 Etatu</option>
-                                                    <option value="H">1/2 Etatu</option>
-                                                </select>
-                                            </div>
-                                        </div>
+                                                <div class="row form-group">
+                                                    <div class="col col-md-3">
+                                                        <label for="text-input" class=" form-control-label">Start Date</label>
+                                                    </div>
+                                                    <div class="col-12 col-md-9">
+                                                        <input type="date" id="start_date" name="start_date" placeholder="Text" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <div class="col col-md-3">
+                                                        <label for="text-input" class=" form-control-label">End date</label>
+                                                    </div>
+                                                    <div class="col-12 col-md-9">
+                                                        <input type="date" id="end_date" name="end_date" placeholder="Text" class="form-control">
+                                                    </div>
+                                                </div>
 
                                 </div>
                                 <div class="card-footer">

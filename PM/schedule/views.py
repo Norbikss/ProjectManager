@@ -104,16 +104,17 @@ def free_days(request):
 
 	if request.method == "POST":
 		employee = request.POST['employee']
+		the_employee = Employee.objects.get(id = employee)
 		free_day_type = request.POST['free_day_type']
 		if free_day_type == "vacation":
 			start_date = request.POST['start_date']
 			end_date = request.POST['end_date']
 
-			vacation = Vacation(employee = employee,start_date = start_date, end_date = end_date)
+			vacation = Vacation(employee = the_employee,start_date = start_date, end_date = end_date)
 			vacation.save()
 		elif free_day_type == 'free_day':
 			free_day = request.POST['start_date']
-			free_day = Free_days(employee = employee, date = free_day)
+			free_day = Free_days(employee = the_employee, date = free_day)
 			free_day.save()
 
 			
@@ -121,6 +122,23 @@ def free_days(request):
 	return render(request, 'free_days.html', {'employees': employee_list})
 
 @login_required(login_url = 'login')
+
+@login_required(login_url = 'login')
+def create_schedule(request):
+	user = request.user
+	employer = Profile.objects.get(user = user)
+	employer_employee = Employee.objects.filter(employer = employer)
+	employee_list = []
+	for employee in employer_employee:
+		employee_list.append(employee)
+	if request.method == "POST":
+		for_who = request.POST['employee']
+		start_date = request.POST['start_date']
+		end_date = request.POST['end_date']
+		
+		
+
+	return render(request, 'create_schedule.html',{'employees': employee_list})
 def logout(request):
 	auth.logout(request)
 	return redirect('/')
