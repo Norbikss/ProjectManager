@@ -1,10 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.forms import PasswordResetForm, PasswordChangeForm
 from .models import Profile, Employee, Vacation, Free_days
+from .forms import EmployeeForm, PasswordChange, EmailChange
 #form .schedule import Schedule
 
 # Create your views here.
@@ -71,7 +72,7 @@ def add_employee(request):
 
 		employee = Employee(employer = employer, name = name, surname = surname, position = position, work_time = etat)
 		employee.save()
-
+		return redirect('show_employees')
 
 	return render(request, 'add_employee.html')
 @login_required(login_url = 'login')
@@ -84,11 +85,12 @@ def show_employees(request):
 		employee_list.append(employee)
 
 
+
 	return render(request, 'show_employees.html', {'employees': employee_list})
 
 @login_required(login_url = 'login')
 def emp_profile(request, pk):
-	employee = Employee.objects.get(id = pk)
+	employee = get_object_or_404(Employee, id = pk)
 	vacations = Vacation.objects.filter(employee = employee)
 	free_days = Free_days.objects.filter(employee = employee)
 
@@ -122,7 +124,6 @@ def free_days(request):
 
 	return render(request, 'free_days.html', {'employees': employee_list})
 
-@login_required(login_url = 'login')
 
 @login_required(login_url = 'login')
 def create_schedule(request):
@@ -142,6 +143,49 @@ def create_schedule(request):
 		
 
 	return render(request, 'create_schedule.html',{'employees': employee_list})
+@login_required(login_url = 'login')
+def edit_employee(request, employee_id):
+	employee = Employee.objects.get(id = employee_id)
+	form = EmployeeForm(request.POST or None, instance = employee)
+	if form.is_valid():
+		form.save()
+		return redirect('show_employees')
+	return render(request, 'edit_employee.html',{'form': form, "employee": employee})
+@login_required(login_url = 'login')
+def delete_employee(request, employee_id):
+	employee = Employee.objects.get(id = employee_id)
+	employee.delete()
+	return redirect('show_employees')
+@login_required(login_url = 'login')
+def delete_vacation(request, pk):
+	vacation = Vacation.objects.get(id = pk)
+	employee = Employee.objects.get(id = free_day.employee.id)
+
+	vacation.delete()
+	return redirect('emp_profile', pk = employee.id)
+@login_required(login_url = 'login')	
+def delete_free_day(request, pk):
+
+	free_day = Free_days.objects.get(id = pk)
+
+	employee = Employee.objects.get(id = free_day.employee.id)
+	
+	free_day.delete()
+	return redirect('emp_profile', pk = employee.id)
+
+@login_required(login_url = 'login')
+def settings(request):
+	user = User.objects.get(username = request.user)
+	edit_password = PasswordChange(user)
+	edit_email = EmailChange(request.POST or None, instance = user)
+	if edit_password.is_valid():
+		edit_password.save()
+		return redirect("settings")
+	if edit_email.is_valid():
+		edit_email.save()
+		return redirect("settings")
+	return render(request, 'settings.html', {"edit_password": edit_password, 'user': user, 'edit_email':edit_email})
+
 def logout(request):
 	auth.logout(request)
 	return redirect('/')

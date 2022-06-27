@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load crispy_forms_tags %}
 {% load static %}
 <head>
     <!-- Required meta tags-->
@@ -49,7 +50,7 @@
                         <div class="login-form">
                             <form action="" method="post" name = 'reset_form'>
                                 {% csrf_token %}
-                                {{form}}
+                                {{form | crispy}}
                                 <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">submit</button>
                             </form>
                         </div>
