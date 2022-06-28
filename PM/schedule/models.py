@@ -27,12 +27,12 @@ class Employee(models.Model):
     work_time = models.CharField(max_length=1, choices=etat)
 
     def __str__(self):
-    	return self.name
+        return self.name
 
 
 class Work_day(models.Model):
     employer = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    employee = models.ForeignKey(Employee, on_delete = models.CASCADE)
     day = models.DateField()
     hours = (
         ("A", '9-17'),
@@ -44,7 +44,7 @@ class Work_day(models.Model):
     time = models.CharField(max_length=1, choices=hours)
     worked_hours = models.IntegerField()
     def __str__(self):
-    	return f'{self.day} {self.employee}'
+        return f'{self.day} {self.employee}'
 
 class Vacation(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
@@ -57,4 +57,4 @@ class Free_days(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     date = models.DateField()
     def __str__(self):
-    	return f'{self.employee} {self.date}'
+        return f'{self.employee} {self.date}'

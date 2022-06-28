@@ -134,14 +134,14 @@ def create_schedule(request):
 	for employee in employer_employee:
 		employee_list.append(employee)
 	if request.method == "POST":
-		for_who = request.POST['employee']
+		for_who = request.POST.getlist('employee')
 		start_date = request.POST['start_date']
 		end_date = request.POST['end_date']
-		for employee in for_who:
-			the_employee = Employee.objects.get(id = employee)
+		for item in for_who:
+			the_employee = Employee.objects.get(id = item)
 			personal = Schedule_generator(employer, the_employee, start_date, end_date)
 			personal.main()
-			return redirect('show_employees')
+		return redirect('show_employees')
 				
 		
 		
