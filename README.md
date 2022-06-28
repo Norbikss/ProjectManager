@@ -22,8 +22,9 @@ FUNCTIONALITY RIGHT NOW:
 - Change Employee atributes
 - Delete Employee
 - Delete Free days/ Vacations
+- Simple schedule algorithm  (fully random atm)
 
 TO DO:
-- Simple schedule algorithm  # test version of random one using pandas in repository files
+
 - Export schedule to html to be visible on app
 - Export schedule to other formats
