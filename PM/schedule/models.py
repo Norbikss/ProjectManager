@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 
+
 User = get_user_model()
 
 
@@ -37,7 +38,8 @@ class Work_day(models.Model):
         ("A", '9-17'),
         ("B", '11-19'),
         ("C", '13-21'),
-        ("G", '9-21')
+        ("G", '9-21'),
+        ("W", 'Wolne'),
     )
     time = models.CharField(max_length=1, choices=hours)
     worked_hours = models.IntegerField()

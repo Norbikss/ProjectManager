@@ -3,13 +3,14 @@ import numpy as np
 from datetime import date
 from calendar import monthrange
 from random import choice
-#from models import Profile, Employee, Vacation, Free_days
-#from django.contrib.auth.models import User, auth
+from .models import Profile, Employee, Vacation, Free_days, Work_day
+from django.contrib.auth.models import User, auth
 
 class Schedule_generator:
 
-	def __init__(self, start_date, end_date):
-		#self.employee = employee
+	def __init__(self, employer, employee, start_date, end_date):
+		self.employer = employer
+		self.employee = employee
 		self.start_date = start_date
 		self.end_date = end_date
 		self.holiday = ['01-01-2022','06-01-2022','17-04-2022','18-04-2022', '01-05-2022', '03-05-2022', 
@@ -22,6 +23,9 @@ class Schedule_generator:
 
 	def is_str_date(self, day):
 		return day.strftime('%d-%m-%Y')
+
+	def is_str_date2(self, day):
+		return day.strftime('%Y-%m-%d')
 
 
 
@@ -57,24 +61,24 @@ class Schedule_generator:
 		return total_hours
 
 	def main(self):
-		pracuje = []
+		#pracuje = []
+		day = self.all_days()
 		days = self.weekday()
 		wybor = ["9-21", "Wolne"]
 		for i in range(len(self.weekday())):
 			if days[i] == "Sobota" or days == "Niedziela" or days == "Swieto":
-				pracuje.append("Wolne")
+				work_day = Work_day.objects.create(employer = self.employer, employee = self.employee, day = self.is_str_date2(day[i]),time = "W", worked_hours = 0 )
+				work_day.save()
+				#pracuje.append("Wolne")
 			else:
 				t_n = choice(wybor)
-				pracuje.append(t_n)
-
-		return pracuje
-
-
+				if t_n == "Wolne":
+					work_day = Work_day.objects.create(employer = self.employer, employee = self.employee, day = self.is_str_date2(day[i]),time = "W", worked_hours = 0 )
+					work_day.save()
+				else:
+					work_day = Work_day.objects.create(employer = self.employer, employee = self.employee, day = self.is_str_date2(day[i]),time = "G", worked_hours = 12 )
+					work_day.save()
 		
 
 
-
-
-a = Schedule_generator(start_date = '2022-06-01', end_date = '2022-06-30')
-df = pd.DataFrame(index=a.weekday(), columns=["ania"], data = a.main())
-print(df)
+	

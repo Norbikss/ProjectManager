@@ -4,9 +4,9 @@ from django.contrib import messages
 from django.contrib.auth.models import User, auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordResetForm, PasswordChangeForm
-from .models import Profile, Employee, Vacation, Free_days
+from .models import Profile, Employee, Vacation, Free_days, Work_day
 from .forms import EmployeeForm, PasswordChange, EmailChange
-#form .schedule import Schedule
+from .schedule import Schedule_generator
 
 # Create your views here.
 @login_required(login_url = 'login')
@@ -137,8 +137,12 @@ def create_schedule(request):
 		for_who = request.POST['employee']
 		start_date = request.POST['start_date']
 		end_date = request.POST['end_date']
-		# for employee in for_who:
-			#personal = Schedule(employee, start_date, end_date)
+		for employee in for_who:
+			the_employee = Employee.objects.get(id = employee)
+			personal = Schedule_generator(employer, the_employee, start_date, end_date)
+			personal.main()
+			return redirect('show_employees')
+				
 		
 		
 
