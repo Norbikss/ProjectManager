@@ -6,6 +6,7 @@ ONGOING PROJECT - using Django framework for backend and CoolAdmin templates for
 Technologies for BACKEND:
 - Django
 - Postgree
+- Pandas
 FRONTEND:
 - CoolAdmin templates
 - Bootstrap
