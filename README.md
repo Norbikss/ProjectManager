@@ -1,6 +1,6 @@
 # ProjectManager
 
-"One click" schedule creation app for retail managers. Created to help with creation, organization and clarness of schedules for workes
+"One click" schedule creation app for retail managers. Created to help with creation, organisation and clearness of schedules for employees 
 ONGOING PROJECT - using Django framework for backend and CoolAdmin templates for frontend.
 
 Technologies for BACKEND:
