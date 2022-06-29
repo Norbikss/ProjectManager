@@ -1,11 +1,12 @@
 # ProjectManager
 
-"One click" schedule creation app for retail managers. Created to help with creation, organization and clarness of schedules for workes
+"One click" schedule creation app for retail managers. Created to help with creation, organisation and clearness of schedules for employees 
 ONGOING PROJECT - using Django framework for backend and CoolAdmin templates for frontend.
 
 Technologies for BACKEND:
 - Django
 - Postgree
+- Pandas
 FRONTEND:
 - CoolAdmin templates
 - Bootstrap
@@ -22,8 +23,9 @@ FUNCTIONALITY RIGHT NOW:
 - Change Employee atributes
 - Delete Employee
 - Delete Free days/ Vacations
+- Simple schedule algorithm  (fully random atm)
 
 TO DO:
-- Simple schedule algorithm  # test version of random one using pandas in repository files
+
 - Export schedule to html to be visible on app
 - Export schedule to other formats
